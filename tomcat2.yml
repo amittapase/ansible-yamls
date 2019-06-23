@@ -1,0 +1,21 @@
+---
+- hosts: all
+  tasks:
+  - name: install java
+    yum:
+      name: java-1.8.0-openjdk.x86_64
+      state: present
+
+  - name: install tomcat
+    yum:
+      name: tomcat
+      state: present
+  - name: download the jenkins war
+    get_url:
+      url: http://ftp.yz.yamagata-u.ac.jp/pub/misc/jenkins/war-stable/2.60.2/jenkins.war
+      dest: /usr/share/tomcat/webapps/jenkins.war
+  - name: enable service
+    service:
+      name: tomcat
+      state: started
+      enabled: yes

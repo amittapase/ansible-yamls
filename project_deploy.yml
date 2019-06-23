@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  become: yes
+  tasks:
+  - name: install java
+    apt:
+      name: openjdk-7-jdk
+      state: present
+      update_cache: yes
+  - name: install tomcat7
+    apt:
+      name: tomcat7
+      state: present
+  - name: start the tomcat service
+    service:
+      name: tomcat7
+      state: started
+      enabled: yes
+
+  - state:
+      path: /var/lib/tomcat7/webapps/*.war
+      register: p
+  - debug:
+      msg: "{{buildno}}  Path exists and is a directory"
+    when: p.stat.isdir is defined and p.stat.isdir
+  - file:
+        path: /var/lib/tomcat7/webapps/*.war
+        state: absent
+  - name: deploy war in webapps
+      get_url:
+        url: http://34.208.96.197:8081/artifactory/ generic-local/${ BUILD_NUMBER}/multi-module/webapp/target/webapp.war
+        dest: /var/lib/tomcat7/webapps/gabrielf.war
+
+
+    

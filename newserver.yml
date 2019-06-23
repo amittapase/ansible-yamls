@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: install the java 
+    yum:
+      name: openjdk8.1.0
+      state: present
+  - name: install tomcat
+    yum:
+      name: tomcat
+      state: present
+
+  - name: download the jenkins war 
+    get_url:
+      url: https:.............
+      dst: /usr/share/webapps/jenkins.war
+  - name: service start
+    service:
+      name: tomcat
+      state: started
+      enabled: yes
+      
+
+
+
+      

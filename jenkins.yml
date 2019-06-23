@@ -1,0 +1,24 @@
+---
+- hosts: appserver
+  become: yes
+  tasks:
+  - name: installing java
+    yum:
+      name: java-1.8.0-openjdk.x86_64
+      state: present
+  - name: installing tomcat
+    yum:
+      name: tomcat
+      state: present
+  - name: download the jenkins.war file
+    get_url:
+      url: http://ftp.yz.yamagata-u.ac.jp/pub/misc/jenkins/war-stable/2.60.2/jenkins.war
+      dest: /usr/share/tomcat/webapps/jenkins.war
+  - name: enable and start the tomcat service
+    service:
+      name: tomcat
+      state: started
+      enabled: yes
+
+
+  

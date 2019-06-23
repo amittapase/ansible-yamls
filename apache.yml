@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: installing apache server in rhel
+    yum:
+      name: httpd
+      state: present
+  - name: service enable 
+    service:
+      name: httpd
+      state: started
+      enabled: yes

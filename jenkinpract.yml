@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  become: yes
+  tasks:
+  - name: install java
+    apt:
+      name: openjdk8-jre
+      state: present
+  - name: tomcat7
+    apt:
+      name: tomcat7
+      state: present
+  - name: download the jenkins.war file from website and put it in webapps folder
+    get_url:
+      url: .......................
+      dest: ................
+  - name: ensure service is enabled and start
+    service:
+      name: tomcat7
+      state: started
+      enabled: yes
